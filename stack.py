@@ -1,49 +1,50 @@
-class stack: 
-    def __init__(self):
-        self.arr = []
+class Stack:
+    def __init__(self, capacity):
+        self.capacity = capacity
         self.size = 0
-        
-    def push(self, number):
-        if(len(self.arr) > 10):
-         raise MemoryError('stack exceed memory')
+        self.arr = []
+
+    def push2(self, number):
+        if self.size > self.capacity:
+            raise IndexError('out of range')
 
         self.arr.append(number)
         self.size += 1
         return self.arr
     
+    def isEmpty2(self):
+        return True if self.size == 0 else False
+    
     def pop2(self):
-        if len(self.arr) == 0:
-         raise IndexError('Stack is empty, cannot pop')
-
-        del self.arr[-1]
+        if self.size < 0:
+            raise IndexError('out of range')
+        
+        del self.arr[len(self.arr)-1]
         self.size -= 1
         return self.arr
     
-    def get_size(self):
-        return self.size
-
-    def isEmpty(self):
-        if(self.size > 0):
-            return False
-        else:
-            return True
+    def remove2(self, number):
+        if self.size < 0:
+            raise IndexError('out of range')
         
+        index = self.arr.index(number)
+        del self.arr[index]
+        self.size -= 1
+        return self.arr
+
     def __str__(self):
-        return f"stack({self.arr})"
+        return f"{self.arr}"
 
 
-s2 = stack()
 
+stack = Stack(10)
+stack.push2(5)
+stack.pop2()
 for i in range(10):
-    i += 1
-    s2.push(i)
+    stack.push2(i)
 
-print(s2)
+print(stack)
 
-s2.pop2()
-
-print(s2)
-
-del s2.arr[0:8:2]
-s2.pop2()
-print(s2)    
+stack.remove2(5)
+print(stack)
+print(stack.isEmpty2())
